@@ -43,12 +43,16 @@ export default function Home() {
           <div>
             <button
               onClick={handleClick}
-              className="relative bg-black text-orange-500 py-4 px-10 rounded-3xl
+              className="relative bg-black text-orange-500 py-3 px-10 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-4xl mt-28"
             >
-              <RiUploadLine style={{ display: "inline" }} className="ml-2" />{" "}
+              <RiUploadLine
+                size="48px"
+                style={{ display: "inline" }}
+                className="ml-2"
+              />{" "}
               Upload CV
             </button>
             <input

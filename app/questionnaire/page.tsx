@@ -1,24 +1,31 @@
 "use client";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
-import { RiUploadLine } from "react-icons/ri";
-import { useRef } from "react";
+import { RiAddLine, RiCheckLine, RiUploadLine } from "react-icons/ri";
+import { useRef, useState } from "react";
 
 export default function Home() {
-  const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const questionTextRef = useRef<HTMLTextAreaElement>(null);
+  const [questions, setQuestions] = useState<string[]>([]);
 
-  const handleClick = () => {
-    if (inputFileRef.current) {
-      inputFileRef.current.click(); // Ensure the ref is not null
+  const handleAdd = () => {
+    const questionText = questionTextRef.current?.value;
+    if (!questionText) {
+      alert("Please Enter a Question");
+      return;
+    }
+
+    // Add the new question to the existing state
+    setQuestions((prevQuestions) => [...prevQuestions, questionText]);
+
+    // Clear the textarea after adding the question
+    if (questionTextRef.current) {
+      questionTextRef.current.value = "";
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      console.log("Selected file:", file);
-      // Handle the uploaded file here (e.g., upload it to the server or process it)
-    }
+  const handleSubmit = () => {
+    console.log(questions);
   };
   return (
     <main className="bg-black text-orange-500 h-full">
@@ -27,14 +34,14 @@ export default function Home() {
           <TypeAnimation
             sequence={[
               "Dear HR! Add your questions...",
-              5000,
+              3000,
               "and make the applicants suffer (:",
-              5000,
+              3000,
             ]}
             wrapper="span"
             speed={60}
             style={{ display: "inline-block" }}
-            repeat={1}
+            repeat={Infinity}
             className="text-center mt-28 text-5xl"
             cursor={false}
           />
@@ -44,8 +51,42 @@ export default function Home() {
                         text-white mb-2"
             placeholder="Question..."
             rows={1}
-            // ref={full_name_ref}
+            ref={questionTextRef}
           />
+          <div className="w-full flex justify-end">
+            <button
+              onClick={handleAdd}
+              className="bg-black text-orange-500 py-2 px-5 rounded-3xl
+            drop-shadow-[0_1px_3px_rgba(255,165,0,0.8)]
+            focus:outline-none hover:drop-shadow-[0_2px_5px_rgba(255,165,0,1)]
+             text-lg mt-10"
+            >
+              <RiAddLine style={{ display: "inline" }} className="ml-2" /> Add
+              Question
+            </button>
+          </div>
+          <div className="w-full flex justify-start">
+            <ul className="text-white text-2xl list-disc pl-5">
+              {questions.map((question, index) => (
+                <li key={index}>{question}</li>
+              ))}
+            </ul>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            className="relative bg-black text-orange-500 py-3 px-10 rounded-3xl
+            drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
+            focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
+             text-4xl mt-24"
+          >
+            <RiCheckLine
+              size="48px"
+              style={{ display: "inline" }}
+              className="ml-2"
+            />{" "}
+            Submit
+          </button>
         </div>
       </div>
     </main>
