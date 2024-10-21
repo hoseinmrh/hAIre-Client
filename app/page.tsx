@@ -2,8 +2,24 @@
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { RiUploadLine } from "react-icons/ri";
+import { useRef } from "react";
 
 export default function Home() {
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+
+  const handleClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click(); // Ensure the ref is not null
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      console.log("Selected file:", file);
+      // Handle the uploaded file here (e.g., upload it to the server or process it)
+    }
+  };
   return (
     <main className="bg-black text-orange-500 h-full">
       <div className="container max-w-3xl m-auto">
@@ -24,16 +40,25 @@ export default function Home() {
             className="text-center mt-28 text-5xl"
             cursor={false}
           />
-
-          <button
-            className="relative bg-black text-orange-500 py-4 px-10 rounded-3xl
+          <div>
+            <button
+              onClick={handleClick}
+              className="relative bg-black text-orange-500 py-4 px-10 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-4xl mt-28"
-          >
-            <RiUploadLine style={{ display: "inline" }} className="ml-2" />{" "}
-            Upload CV
-          </button>
+            >
+              <RiUploadLine style={{ display: "inline" }} className="ml-2" />{" "}
+              Upload CV
+            </button>
+            <input
+              ref={inputFileRef}
+              type="file"
+              accept="application/pdf"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+          </div>
         </div>
       </div>
     </main>
