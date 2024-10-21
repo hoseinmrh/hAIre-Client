@@ -90,9 +90,9 @@ export default function Home() {
         </div>
       </div>
       <footer>
-        <div className="flex justify-center mb-12">
+        <a href="/" className="flex justify-center mb-12">
           <Image src={"/logo2.png"} alt={"logo"} width={80} height={20} />
-        </div>
+        </a>
       </footer>
     </main>
   );
