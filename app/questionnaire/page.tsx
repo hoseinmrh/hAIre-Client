@@ -78,7 +78,7 @@ export default function Home() {
             className="relative bg-black text-orange-500 py-3 px-10 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
-             text-4xl mt-24"
+             text-4xl mt-24 mb-12"
           >
             <RiCheckLine
               size="48px"
@@ -89,6 +89,11 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <footer>
+        <div className="flex justify-center mb-12">
+          <Image src={"/logo2.png"} alt={"logo"} width={80} height={20} />
+        </div>
+      </footer>
     </main>
   );
 }
