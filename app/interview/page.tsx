@@ -3,13 +3,24 @@ import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { RiCornerDownRightLine, RiMicLine } from "react-icons/ri";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
+const questions = [
+  "meow meow meow",
+  "weqweqwe",
+  "wewdsadadwad",
+  "csacddwdw",
+  "21312edsad134edwawdqwdwd",
+];
 export default function Home() {
+  const router = useRouter();
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(0);
   const [hasFinished, setHasFinished] = useState<boolean>(false);
+  const [question, setQuestion] = useState<string>("");
 
   const handleButton = () => {
+    setQuestion(questions[counter]);
     setCounter(counter + 1);
 
     if (!hasStarted) {
@@ -21,6 +32,7 @@ export default function Home() {
       return;
     }
     if (hasFinished) {
+      router.push("/final");
     }
   };
   return (
@@ -55,6 +67,10 @@ export default function Home() {
             <RiCornerDownRightLine size="48px" style={{ display: "inline" }} />{" "}
             {hasFinished ? "Finish" : !hasStarted ? "Let's Start" : "Next"}
           </button>
+
+          <div className="text-white text-2xl mt-8">
+            {!question ? "" : `Question ${counter}: ${question}`}
+          </div>
 
           <div className="flex w-full justify-end">
             <button
