@@ -1,7 +1,12 @@
 "use client";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
-import { RiAddLine, RiCheckLine, RiUploadLine } from "react-icons/ri";
+import {
+  RiAddLine,
+  RiCheckLine,
+  RiCornerDownRightLine,
+  RiUploadLine,
+} from "react-icons/ri";
 import { useRef, useState } from "react";
 import { CVData, ICVData } from "@/components/cvData";
 
@@ -39,20 +44,23 @@ export default function Home() {
       <div className="container max-w-3xl m-auto">
         <div className="flex flex-col items-center justify-between p-10 mt-20">
           <CVData {...test} />
-          <button
-            // onClick={handleSubmit}
-            className="relative bg-black text-orange-500 py-3 px-10 rounded-3xl
+          <div>
+            <a
+              // onClick={handleNext}
+
+              className="relative bg-orange-500 text-black py-2 w-48 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
-             text-4xl mt-24 mb-12"
-          >
-            <RiCheckLine
-              size="48px"
-              style={{ display: "inline" }}
-              className="ml-2"
-            />{" "}
-            Submit
-          </button>
+             text-xl mt-28"
+            >
+              <RiCornerDownRightLine
+                size="48px"
+                style={{ display: "inline" }}
+                className="ml-2"
+              />{" "}
+              Next
+            </a>
+          </div>
         </div>
       </div>
       <footer>

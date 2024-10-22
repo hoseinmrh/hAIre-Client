@@ -2,6 +2,7 @@
 
 import { TypeAnimation } from "react-type-animation";
 import { WorkExperience } from "@/components/workExperienceCard";
+import { EducationCard } from "@/components/educationCard";
 
 export interface IWorkExperience {
   position: string;
@@ -23,7 +24,12 @@ export interface ICVData {
   education: IEducation[];
 }
 
-export const CVData = ({ name, email, work_experiences }: ICVData) => {
+export const CVData = ({
+  name,
+  email,
+  work_experiences,
+  education,
+}: ICVData) => {
   return (
     <>
       <TypeAnimation
@@ -53,6 +59,11 @@ export const CVData = ({ name, email, work_experiences }: ICVData) => {
             from_to={work_experiences.from_to}
             description={work_experiences.description}
           />
+        ))}
+
+        <div className="text-2xl text-white mt-16 mb-4">👨‍🎓 Educations:</div>
+        {education.map((ed, index) => (
+          <EducationCard key={index} {...ed} />
         ))}
       </div>
     </>
