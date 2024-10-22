@@ -65,8 +65,7 @@ export default function Home() {
             focus:outline-none hover:drop-shadow-[0_2px_5px_rgba(255,165,0,1)]
              text-md mt-10"
             >
-              <RiAddLine style={{ display: "inline" }} className="ml-2" /> Add
-              Question
+              <RiAddLine style={{ display: "inline" }} /> Add Question
             </button>
 
             <button
@@ -94,8 +93,8 @@ export default function Home() {
             </div>
             <ul className="text-xl list-disc pl-5">
               <li key={0}>Where do you see yourself in the next 5 years?</li>
-              <li key={0}>What is your biggest achievement?</li>
-              <li key={0}>Who are your role models?</li>
+              <li key={1}>What is your biggest achievement?</li>
+              <li key={2}>Who are your role models?</li>
             </ul>
           </div>
 
@@ -106,12 +105,7 @@ export default function Home() {
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-xl mt-24 mb-12"
           >
-            <RiCheckLine
-              size="48px"
-              style={{ display: "inline" }}
-              className="ml-2"
-            />{" "}
-            Submit
+            <RiCheckLine size="48px" style={{ display: "inline" }} /> Submit
           </button>
         </div>
       </div>

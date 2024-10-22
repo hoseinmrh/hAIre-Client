@@ -21,14 +21,14 @@ export interface ICVData {
   name: string;
   email: string;
   work_experiences: IWorkExperience[];
-  education: IEducation[];
+  educations: IEducation[];
 }
 
 export const CVData = ({
   name,
   email,
   work_experiences,
-  education,
+  educations,
 }: ICVData) => {
   return (
     <>
@@ -62,7 +62,7 @@ export const CVData = ({
         ))}
 
         <div className="text-2xl text-white mt-16 mb-4">👨‍🎓 Educations:</div>
-        {education.map((ed, index) => (
+        {educations.map((ed, index) => (
           <EducationCard key={index} {...ed} />
         ))}
       </div>

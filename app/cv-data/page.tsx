@@ -27,7 +27,7 @@ const test: ICVData = {
       description: "Frontend Developer at Scalapay",
     },
   ],
-  education: [
+  educations: [
     {
       degree: "Bachelor of Computer Science",
       institution: "Shiraz University",
@@ -47,18 +47,17 @@ export default function Home() {
           <div>
             <a
               // onClick={handleNext}
-
-              className="relative bg-orange-500 text-black py-2 w-48 rounded-3xl
+              href="/interview"
+              className="relative bg-orange-500 text-black py-2 px-4 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-xl mt-28"
             >
               <RiCornerDownRightLine
-                size="48px"
+                size="32px"
                 style={{ display: "inline" }}
-                className="ml-2"
               />{" "}
-              Next
+              Start Interview
             </a>
           </div>
         </div>

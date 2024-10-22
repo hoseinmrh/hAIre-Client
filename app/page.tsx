@@ -58,11 +58,7 @@ export default function Home() {
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-xl mt-28"
               >
-                <RiUploadLine
-                  size="48px"
-                  style={{ display: "inline" }}
-                  className="ml-2"
-                />{" "}
+                <RiUploadLine size="48px" style={{ display: "inline" }} />{" "}
                 Upload CV
               </button>
               <input
@@ -86,7 +82,6 @@ export default function Home() {
                 <RiCornerDownRightLine
                   size="48px"
                   style={{ display: "inline" }}
-                  className="ml-2"
                 />{" "}
                 Next
               </button>
