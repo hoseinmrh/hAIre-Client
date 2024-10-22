@@ -1,4 +1,7 @@
+"use client";
+
 import { TypeAnimation } from "react-type-animation";
+import { WorkExperience } from "@/components/workExperienceCard";
 
 export interface IWorkExperience {
   position: string;
@@ -20,7 +23,7 @@ export interface ICVData {
   education: IEducation[];
 }
 
-export const CVData = ({ name }: ICVData) => {
+export const CVData = ({ name, email, work_experiences }: ICVData) => {
   return (
     <>
       <TypeAnimation
@@ -29,9 +32,29 @@ export const CVData = ({ name }: ICVData) => {
         speed={60}
         style={{ display: "inline-block" }}
         repeat={Infinity}
-        className="text-center mt-28 text-5xl"
+        className="text-center mt-12 text-4xl"
         cursor={false}
       />
+
+      <div className="flex justify-start w-full mt-12 flex-col">
+        <div className="text-2xl text-white">
+          💻 Your email address:{" "}
+          <span className="text-orange-500 text-xl">{email}</span>
+        </div>
+
+        <div className="text-2xl text-white mt-16 mb-4">
+          👑 Work Experiences:
+        </div>
+        {work_experiences.map((work_experiences, index) => (
+          <WorkExperience
+            key={index}
+            position={work_experiences.position}
+            company={work_experiences.company}
+            from_to={work_experiences.from_to}
+            description={work_experiences.description}
+          />
+        ))}
+      </div>
     </>
   );
 };

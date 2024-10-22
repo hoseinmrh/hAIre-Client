@@ -3,8 +3,33 @@ import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { RiAddLine, RiCheckLine, RiUploadLine } from "react-icons/ri";
 import { useRef, useState } from "react";
-import { CVData } from "@/components/cvData";
+import { CVData, ICVData } from "@/components/cvData";
 
+const test: ICVData = {
+  name: "Hosein",
+  email: "hoseinmirhoseini64@gmail.com",
+  work_experiences: [
+    {
+      position: "Software Engineer",
+      company: "Scalapay",
+      from_to: "2021-01-01 to Present",
+      description: "Software Engineer at Scalapay",
+    },
+    {
+      position: "Frontend Developer",
+      company: "Scalapay",
+      from_to: "2020-01-01 to 2021-01-01",
+      description: "Frontend Developer at Scalapay",
+    },
+  ],
+  education: [
+    {
+      degree: "Bachelor of Computer Science",
+      institution: "Shiraz University",
+      from_to: "2017-01-01 to 2021-09-01",
+    },
+  ],
+};
 export default function Home() {
   const handleSubmit = () => {
     // console.log(questions);
@@ -13,7 +38,7 @@ export default function Home() {
     <main className="bg-black text-orange-500 h-full">
       <div className="container max-w-3xl m-auto">
         <div className="flex flex-col items-center justify-between p-10 mt-20">
-          <CVData name={"Hosein"} />
+          <CVData {...test} />
           <button
             // onClick={handleSubmit}
             className="relative bg-black text-orange-500 py-3 px-10 rounded-3xl
