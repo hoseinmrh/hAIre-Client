@@ -19,7 +19,11 @@ export default function Home() {
     <main className="bg-black text-orange-500 h-full">
       <div className="container max-w-3xl m-auto">
         <div className="flex flex-col items-center justify-between p-10 mt-20">
-          {cvData ? <CVData {...cvData} /> : <p>No CV data found</p>}
+          {cvData ? (
+            <CVData {...cvData} />
+          ) : (
+            <p className="mb-20 text-3xl">No CV data found</p>
+          )}
           <div>
             <a
               href="/interview"
