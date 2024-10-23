@@ -3,8 +3,12 @@ import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { RiCornerDownRightLine, RiUploadLine } from "react-icons/ri";
 import { useRef, useState } from "react";
+import axios from "axios";
+import { ICVData } from "@/components/cvData";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [filename, setFilename] = useState<string>("");
 
@@ -22,13 +26,56 @@ export default function Home() {
     }
   };
 
-  const handleNext = () => {
-    if (!filename) {
+  const handleNext = async () => {
+    // Check if a file is selected
+    if (
+      !inputFileRef.current?.files ||
+      inputFileRef.current.files.length === 0
+    ) {
       alert("Please Add Your CV");
       return;
     }
-    console.log("meow");
+
+    // Get the selected file
+    const file = inputFileRef.current.files[0];
+
+    // Create a FormData object and append the file
+    const formData = new FormData();
+    formData.append("cv_file", file);
+
+    try {
+      // Make a POST request to FastAPI using Axios
+      const response = await axios.post<ICVData>(
+        "http://192.168.92.179:8000/api/v1/cv/extract",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      // Handle the response data
+      const cvData = response.data;
+      // Store the data in local storage
+      localStorage.setItem("cvData", JSON.stringify(cvData));
+
+      // Navigate to the cv-data page
+      router.push("/cv-data");
+    } catch (error) {
+      console.error("Error uploading CV:", error);
+
+      // Error handling for network or server issues
+      if (axios.isAxiosError(error) && error.response) {
+        alert(
+          `Failed to upload CV: ${error.response.data.detail || error.message}`,
+        );
+      } else {
+        alert("An error occurred while uploading your CV. Please try again.");
+      }
+    }
   };
+
   return (
     <main className="bg-black text-orange-500 h-full">
       <div className="container max-w-3xl m-auto">
