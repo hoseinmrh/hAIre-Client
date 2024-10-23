@@ -3,6 +3,7 @@ import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { RiAddLine, RiCheckLine, RiCloseLine } from "react-icons/ri";
 import { useRef, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const questionTextRef = useRef<HTMLTextAreaElement>(null);
@@ -28,8 +29,23 @@ export default function Home() {
     setQuestions([]);
   };
 
-  const handleSubmit = () => {
-    console.log(questions);
+  const handleSubmit = async () => {
+    try {
+      const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/questions`;
+      await axios.post(api_route, questions);
+      alert("Questions added successfully");
+    } catch (error) {
+      console.error("Error Adding Questions:", error);
+
+      // Error handling for network or server issues
+      if (axios.isAxiosError(error) && error.response) {
+        alert(
+          `Failed to add questions: ${error.response.data.detail || error.message}`,
+        );
+      } else {
+        alert("An error occurred while adding questions. Please try again.");
+      }
+    }
   };
   return (
     <main className="bg-black text-orange-500 h-full">

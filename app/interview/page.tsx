@@ -74,7 +74,7 @@ export default function Home() {
 
           <div className="flex w-full justify-end">
             <button
-              // onClick={handleClick}
+              // onClick={handleMic}
               className="relative bg-black text-orange-500 py-2 px-2 rounded-full
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
