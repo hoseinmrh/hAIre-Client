@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CVData, ICVData } from "@/components/cvData";
+import { RiCornerDownRightLine } from "react-icons/ri";
 
 export default function Home() {
   const [cvData, setCvData] = useState<ICVData | null>(null);
@@ -22,11 +23,15 @@ export default function Home() {
           <div>
             <a
               href="/interview"
-              className="relative bg-orange-500 text-black py-2 px-4 rounded-3xl
+              className="relative bg-orange-500 text-black py-4 px-8 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
              text-xl mt-28"
             >
+              <RiCornerDownRightLine
+                size="48px"
+                style={{ display: "inline" }}
+              />{" "}
               Start Interview
             </a>
           </div>

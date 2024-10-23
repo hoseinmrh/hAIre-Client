@@ -15,16 +15,16 @@ export const WorkExperience = ({
 }: IWorkExperience) => {
   return (
     <>
-      <div className="bg-transparent opacity-80 text-left w-full rounded-2xl p-4 mb-8 shadow-sm shadow-orange-500">
-        <h3 className="mb-4 text-justify">
+      <div className="bg-transparent opacity-80 text-left w-full rounded-2xl p-4 mb-8 shadow-sm shadow-orange-500 text-xl">
+        <p className="mb-4 text-justify">
           <span className="text-gray-400">Job Position: </span>
           {position}
-        </h3>
+        </p>
 
-        <h4 className="mb-4 text-justify">
+        <p className="mb-4 text-justify">
           <span className="text-gray-400">Company: </span>
           {company}
-        </h4>
+        </p>
 
         <p className="text-lg mb-3 text-justify">
           <span className="text-gray-400">From-To: </span>

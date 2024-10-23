@@ -45,15 +45,12 @@ export default function Home() {
 
     try {
       // Make a POST request to FastAPI using Axios
-      const response = await axios.post<ICVData>(
-        "http://192.168.92.179:8000/api/v1/cv/extract",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      const api_route = `${process.env.NEXT_PUBLIC__API_URL}/cv/extract`;
+      const response = await axios.post<ICVData>(api_route, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-      );
+      });
 
       // Handle the response data
       const cvData = response.data;
