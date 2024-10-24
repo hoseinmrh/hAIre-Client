@@ -38,7 +38,7 @@ export const CVData = ({
         speed={60}
         style={{ display: "inline-block" }}
         repeat={Infinity}
-        className="text-center mt-12 text-4xl"
+        className="text-center text-4xl"
         cursor={false}
       />
 

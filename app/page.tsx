@@ -1,7 +1,11 @@
 "use client";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
-import { RiCornerDownRightLine, RiUploadLine } from "react-icons/ri";
+import {
+  RiCornerDownRightLine,
+  RiLoaderLine,
+  RiUploadLine,
+} from "react-icons/ri";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { ICVData } from "@/components/cvData";
@@ -56,6 +60,9 @@ export default function Home() {
 
       // Handle the response data
       const cvData = response.data;
+
+      localStorage.removeItem("cvData");
+
       // Store the data in local storage
       localStorage.setItem("cvData", JSON.stringify(cvData));
 
@@ -133,7 +140,10 @@ export default function Home() {
              }`}
               >
                 {loading ? (
-                  "Loading..."
+                  <>
+                    <RiLoaderLine size="48px" style={{ display: "inline" }} />{" "}
+                    Loading...
+                  </>
                 ) : (
                   <>
                     <RiCornerDownRightLine
@@ -146,6 +156,12 @@ export default function Home() {
               </button>
             </div>
           </div>
+          <a
+            className="text-white text-2xl mt-28 mb-8 hover:text-gray-200 underline"
+            href="/questionnaire"
+          >
+            Add HR questions...
+          </a>
         </div>
       </div>
     </main>

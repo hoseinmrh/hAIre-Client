@@ -33,7 +33,9 @@ export default function Home() {
     try {
       const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/questions`;
       await axios.post(api_route, questions);
-      alert("Questions added successfully");
+      alert(
+        "Questions added successfully! You can add questions again, or go back to the main page!",
+      );
     } catch (error) {
       console.error("Error Adding Questions:", error);
 
@@ -62,7 +64,7 @@ export default function Home() {
             speed={60}
             style={{ display: "inline-block" }}
             repeat={Infinity}
-            className="text-center mt-28 text-4xl"
+            className="text-center text-4xl"
             cursor={false}
           />
           <textarea
