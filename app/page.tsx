@@ -158,9 +158,9 @@ export default function Home() {
           </div>
           <a
             className="text-white text-2xl mt-28 mb-8 hover:text-gray-200 underline"
-            href="/questionnaire"
+            href="/hrDashboard"
           >
-            Add HR questions...
+            Complete HR form...
           </a>
         </div>
       </div>
