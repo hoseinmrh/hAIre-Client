@@ -5,23 +5,23 @@ import { WorkExperience } from "@/components/workExperienceCard";
 import { EducationCard } from "@/components/educationCard";
 
 export interface IWorkExperience {
-  position: string;
-  company: string;
-  from_to: string;
-  description: string;
+  position: string | "";
+  company: string | "";
+  from_to: string | "";
+  description: string | "";
 }
 
 export interface IEducation {
-  degree: string;
-  institution: string;
-  from_to: string;
+  degree: string | "";
+  institution: string | "";
+  from_to: string | "";
 }
 
 export interface ICVData {
-  name: string;
-  email: string;
-  work_experiences: IWorkExperience[];
-  educations: IEducation[];
+  name: string | "";
+  email: string | "";
+  work_experiences: IWorkExperience[] | [];
+  educations: IEducation[] | [];
 }
 
 export const CVData = ({

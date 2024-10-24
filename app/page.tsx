@@ -142,7 +142,7 @@ export default function Home() {
                 {loading ? (
                   <>
                     <RiLoaderLine size="48px" style={{ display: "inline" }} />{" "}
-                    Loading...
+                    Wait...
                   </>
                 ) : (
                   <>
