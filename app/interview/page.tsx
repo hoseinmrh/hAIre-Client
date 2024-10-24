@@ -155,7 +155,14 @@ export default function Home() {
     }
 
     if (hasFinished) {
-      router.push("/final");
+      try {
+        const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/generate-report`;
+        axios.get(api_route);
+        router.push("/final");
+      } catch (error) {
+        alert("Something went wrong for generating report");
+        console.error(error);
+      }
     }
   };
   return (

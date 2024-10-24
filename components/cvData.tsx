@@ -31,7 +31,7 @@ export const CVData = ({
   educations,
 }: ICVData) => {
   return (
-    <>
+    <div className="capitalize">
       <TypeAnimation
         sequence={[`Welcome ${name}`, 3000, "Here is your CV Data!", 3000]}
         wrapper="span"
@@ -66,6 +66,6 @@ export const CVData = ({
           <EducationCard key={index} {...ed} />
         ))}
       </div>
-    </>
+    </div>
   );
 };

@@ -59,7 +59,7 @@ export default function Home() {
 
       console.log("data", data);
 
-      const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/questions`;
+      const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/config`;
       await axios.post(api_route, data);
       alert("Questions added successfully!");
     } catch (error) {
@@ -195,7 +195,7 @@ export default function Home() {
                 Some recommended metrics:
               </div>
               <ul className="text-xl list-disc pl-5">
-                <li key={0}>Conference</li>
+                <li key={0}>Confidence</li>
                 <li key={1}>Clarity</li>
                 <li key={2}>Engagement</li>
               </ul>
@@ -204,7 +204,7 @@ export default function Home() {
 
           <div className="h-1 w-full bg-gray-50 opacity-25 rounded-xl mt-6 mb-6"></div>
 
-          <div className="w-full flex flex-row space-x-4">
+          <div className="w-full flex flex-row space-x-4 justify-center">
             <div className="text-white text-2xl text-center">
               Do you want us to ask questions from applicants&#39; CV:
             </div>
