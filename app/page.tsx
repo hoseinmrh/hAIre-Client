@@ -11,6 +11,7 @@ export default function Home() {
   const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [filename, setFilename] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
 
   const handleClick = () => {
     if (inputFileRef.current) {
@@ -44,6 +45,7 @@ export default function Home() {
     formData.append("cv_file", file);
 
     try {
+      setLoading(true); // Set loading to true before API call
       // Make a POST request to FastAPI using Axios
       const api_route = `${process.env.NEXT_PUBLIC__API_URL}/cv/extract`;
       const response = await axios.post<ICVData>(api_route, formData, {
@@ -70,6 +72,8 @@ export default function Home() {
       } else {
         alert("An error occurred while uploading your CV. Please try again.");
       }
+    } finally {
+      setLoading(false); // Set loading to false after API call
     }
   };
 
@@ -118,16 +122,27 @@ export default function Home() {
             <div>
               <button
                 onClick={handleNext}
-                className="relative bg-orange-500 text-black py-2 w-48 rounded-3xl
+                disabled={loading} // Disable button when loading
+                className={`relative bg-orange-500 text-black py-2 w-48 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
-             text-xl mt-28"
+             text-xl mt-28 ${
+               loading
+                 ? "opacity-50 cursor-not-allowed" // Add styles when disabled
+                 : ""
+             }`}
               >
-                <RiCornerDownRightLine
-                  size="48px"
-                  style={{ display: "inline" }}
-                />{" "}
-                Next
+                {loading ? (
+                  "Loading..."
+                ) : (
+                  <>
+                    <RiCornerDownRightLine
+                      size="48px"
+                      style={{ display: "inline" }}
+                    />{" "}
+                    Next
+                  </>
+                )}
               </button>
             </div>
           </div>

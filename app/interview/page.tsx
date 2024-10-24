@@ -6,13 +6,11 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const questions = [
-  "meow meow meow",
-  "weqweqwe",
-  "wewdsadadwad",
-  "csacddwdw",
-  "21312edsad134edwawdqwdwd",
-];
+export interface IResponse {
+  status: string;
+  question_text: string;
+  question_audio: string;
+}
 export default function Home() {
   const router = useRouter();
   const [hasStarted, setHasStarted] = useState<boolean>(false);
@@ -52,18 +50,13 @@ export default function Home() {
           console.log("Audio blob created:", blob);
 
           if (blob.size > 0) {
-            // Play the audio for testing
-            const audioUrl = URL.createObjectURL(blob);
-            const audio = new Audio(audioUrl);
-            audio.play();
-
-            // Send the audio to the API
             const formData = new FormData();
             formData.append("audio_file", blob, "recording.wav");
 
             try {
-              const response = await axios.post(
-                "http://192.168.92.179:8000/api/v1/stt/convert",
+              const api_route = `${process.env.NEXT_PUBLIC__API_URL}/flow/next_step`;
+              const response = await axios.post<IResponse>(
+                api_route,
                 formData,
                 {
                   headers: {
@@ -72,6 +65,21 @@ export default function Home() {
                   },
                 },
               );
+              if (response.data.status == "completed") {
+                setHasFinished(true);
+                return;
+              }
+              setCounter(counter + 1);
+              setQuestion(response.data.question_text);
+
+              const base64Audio = response.data.question_audio;
+              const audioBlob = base64ToBlob(base64Audio, "audio/wav");
+
+              // Create an audio object and play the audio
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+              audio.play();
+
               console.log("Audio uploaded successfully:", response.data);
             } catch (err) {
               console.error("Error uploading audio:", err);
@@ -105,18 +113,47 @@ export default function Home() {
     }
   };
 
-  const handleButton = () => {
-    setQuestion(questions[counter]);
-    setCounter(counter + 1);
+  const base64ToBlob = (base64: string, mimeType: string): Blob => {
+    const byteCharacters = atob(base64); // Decode base64 string
+    const byteNumbers = new Array(byteCharacters.length);
 
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  };
+
+  const handleButton = async () => {
     if (!hasStarted) {
-      setHasStarted(true);
-      return;
+      setCounter(counter + 1);
+
+      const api_route = `${process.env.NEXT_PUBLIC__API_URL}/flow/start`;
+
+      try {
+        // Execute the API call
+        const response = await axios.post<IResponse>(api_route);
+
+        // Set the question text
+        setQuestion(response.data.question_text);
+
+        // Convert the base64 audio string to a Blob
+        const base64Audio = response.data.question_audio;
+        const audioBlob = base64ToBlob(base64Audio, "audio/wav");
+
+        // Create an audio object and play the audio
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+
+        // Update the state
+        setHasStarted(true);
+      } catch (error) {
+        console.error("Error fetching data or playing audio:", error);
+      }
     }
-    if (counter == 5) {
-      setHasFinished(true);
-      return;
-    }
+
     if (hasFinished) {
       router.push("/final");
     }
@@ -145,17 +182,23 @@ export default function Home() {
 
           <button
             onClick={handleButton}
-            className={`relative ${hasFinished ? "bg-red-500 text-white" : "bg-orange-500 text-black"} py-2 w-48 rounded-3xl
-              drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
+            className={`relative py-2 w-48 rounded-3xl
+            ${hasStarted && !hasFinished ? "bg-gray-600 text-black cursor-not-allowed" : ""}
+            ${hasFinished ? "bg-red-500 text-white" : "bg-orange-500 text-black"}
+              drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)] bg-orange-500 text-black
               focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
               text-xl -mt-12`}
           >
             <RiCornerDownRightLine size="48px" style={{ display: "inline" }} />{" "}
-            {hasFinished ? "Finish" : !hasStarted ? "Let's Start" : "Next"}
+            {hasFinished
+              ? "Finish"
+              : !hasStarted
+                ? "Let's Start"
+                : "Use the mic!"}
           </button>
 
           <div className="text-white text-2xl mt-8">
-            {!question ? "" : `Question ${counter}: ${question}`}
+            {!question || hasFinished ? "" : `Question ${counter}: ${question}`}
           </div>
 
           <div className="flex w-full justify-end">
