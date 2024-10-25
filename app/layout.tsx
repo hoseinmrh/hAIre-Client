@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/navBar";
 
 const jost = Jost({
   weight: ["200", "400", "600", "800"],
@@ -19,7 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={jost.className}>{children}</body>
+      <body className={jost.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
