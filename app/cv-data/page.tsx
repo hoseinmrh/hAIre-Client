@@ -3,8 +3,16 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CVData, ICVData } from "@/components/cvData";
 import { RiCornerDownRightLine } from "react-icons/ri";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+export interface IEvaluateFit {
+  result: boolean;
+  score: number;
+}
 
 export default function Home() {
+  const router = useRouter();
   const [cvData, setCvData] = useState<ICVData | null>(null);
 
   // Retrieve data from local storage when the component mounts
@@ -14,6 +22,17 @@ export default function Home() {
       setCvData(JSON.parse(storedData) as ICVData);
     }
   }, []);
+
+  const onNext = async () => {
+    const api_route = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/evaluate-fit`;
+    const response = await axios.get<IEvaluateFit>(api_route);
+
+    if (response.data.result) {
+      router.push("/interview");
+    } else {
+      router.push("/sorry");
+    }
+  };
 
   return (
     <main className="bg-black text-orange-500 h-full">
@@ -26,7 +45,7 @@ export default function Home() {
           )}
           <div>
             <a
-              href="/interview"
+              onClick={onNext}
               className="relative bg-orange-500 text-black py-4 px-8 rounded-3xl
             drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
             focus:outline-none hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)]
@@ -36,7 +55,7 @@ export default function Home() {
                 size="48px"
                 style={{ display: "inline" }}
               />{" "}
-              Start Interview
+              Next
             </a>
           </div>
         </div>

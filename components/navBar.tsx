@@ -17,7 +17,7 @@ const Navbar = () => {
     <>
       <div
         className="flex justify-between items-center w-full h-20
-       px-4 text-white bg-transparent fixed nav z-50 ml-20"
+       px-4 text-white bg-transparent nav z-50 ml-20"
       >
         <ul className="hidden md:flex">
           {links.map((link, id) => (

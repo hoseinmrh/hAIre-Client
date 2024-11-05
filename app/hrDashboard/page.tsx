@@ -9,10 +9,12 @@ export default function Home() {
   const questionTextRef = useRef<HTMLTextAreaElement>(null);
   const metricTextRef = useRef<HTMLTextAreaElement>(null);
   const emailAddressRef = useRef<HTMLTextAreaElement>(null);
+  const jobInfoRef = useRef<HTMLTextAreaElement>(null);
 
   const [questions, setQuestions] = useState<string[]>([]);
   const [metrics, setMetrics] = useState<string[]>([]);
   const [askFromCV, setAskFromCV] = useState(false); // New state for the checkbox
+  const [askTechnical, setAskTechnical] = useState(false); // New state for the checkbox
 
   const handleAddQ = () => {
     const questionText = questionTextRef.current?.value;
@@ -42,6 +44,12 @@ export default function Home() {
     setAskFromCV(e.target.checked); // Update the checkbox state
   };
 
+  const handleCheckboxChangeTechnical = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAskTechnical(e.target.checked); // Update the checkbox state
+  };
+
   const handleSubmit = async () => {
     try {
       const emailAddress = emailAddressRef.current?.value;
@@ -50,11 +58,19 @@ export default function Home() {
         return;
       }
 
+      const jobInfo = jobInfoRef.current?.value;
+      if (!jobInfo) {
+        alert("Please Enter Job Information");
+        return;
+      }
+
       const data = {
+        job_info: jobInfo,
         questions: questions,
         metrics: metrics,
         email_address: emailAddress,
         ask_from_cv: askFromCV,
+        ask_technical: askTechnical,
       };
 
       console.log("data", data);
@@ -93,9 +109,24 @@ export default function Home() {
             cursor={false}
           />
 
-          {/*Email*/}
+          {/*job info*/}
           <div className="w-full">
             <div className="text-white text-2xl mt-20 text-center">
+              Position Information:
+            </div>
+            <textarea
+              className="bg-transparent w-full rounded-2xl p-2 placeholder:opacity-50 mt-4 text-xl drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)] text-white mb-2"
+              placeholder="Position Title and Description..."
+              rows={4}
+              ref={jobInfoRef}
+            />
+          </div>
+
+          <div className="h-1 w-full bg-gray-50 opacity-25 rounded-xl mt-6 mb-6"></div>
+
+          {/*Email*/}
+          <div className="w-full">
+            <div className="text-white text-2xl text-center">
               Your email address:
             </div>
             <textarea
@@ -204,6 +235,7 @@ export default function Home() {
 
           <div className="h-1 w-full bg-gray-50 opacity-25 rounded-xl mt-6 mb-6"></div>
 
+          {/*ask from cv*/}
           <div className="w-full flex flex-row space-x-4 justify-center">
             <div className="text-white text-2xl text-center">
               Do you want us to ask questions from applicants&#39; CV:
@@ -220,6 +252,32 @@ export default function Home() {
                 />
                 <span
                   className={`relative ${askFromCV ? "bg-orange-500" : "bg-gray-50"} py-4 px-4 rounded-xl
+                drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
+                hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)] text-xl`}
+                ></span>
+              </label>
+            </div>
+          </div>
+
+          <div className="h-1 w-full bg-gray-50 opacity-25 rounded-xl mt-6 mb-6"></div>
+
+          {/*ask technical*/}
+          <div className="w-full flex flex-row space-x-4 justify-center">
+            <div className="text-white text-2xl text-center">
+              Do you want us to ask technical questions:
+            </div>
+            <div className="flex justify-center">
+              {/* Single checkbox */}
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="askFromCV"
+                  className="hidden peer"
+                  checked={askTechnical}
+                  onChange={handleCheckboxChangeTechnical} // Handle checkbox change
+                />
+                <span
+                  className={`relative ${askTechnical ? "bg-orange-500" : "bg-gray-50"} py-4 px-4 rounded-xl
                 drop-shadow-[0_2px_5px_rgba(255,165,0,0.8)]
                 hover:drop-shadow-[0_3px_10px_rgba(255,165,0,1)] text-xl`}
                 ></span>
