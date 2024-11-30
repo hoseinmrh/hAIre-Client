@@ -30,6 +30,34 @@ export default function Home() {
       }
     }
   };
+
+  const downloadShortReport = async () => {
+    try {
+      const apiRoute = `${process.env.NEXT_PUBLIC__API_URL}/hr-panel/download-report-short`;
+
+      // Send a GET request to the API
+      const response = await axios.get(apiRoute, {
+        responseType: "blob", // Required to handle the file download as binary data
+      });
+
+      // Create a URL for the blob and trigger the download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "hr_report_short.pdf"); // The file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Clean up after download
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(
+          "Report might not be available right now. PLease try again later",
+        );
+      } else {
+        console.error("An unknown error occurred.");
+      }
+    }
+  };
   return (
     <main className="bg-black text-orange-500 h-full">
       <div className="container max-w-3xl m-auto">
@@ -53,9 +81,16 @@ export default function Home() {
 
           <a
             onClick={downloadReport}
-            className="text-white text-2xl mt-4 mb-28 hover:text-gray-200 underline"
+            className="text-white text-2xl mt-4 mb-4 hover:text-gray-200 underline"
           >
             Download the report
+          </a>
+
+          <a
+            onClick={downloadShortReport}
+            className="text-white text-2xl mt-4 mb-28 hover:text-gray-200 underline"
+          >
+            Download the short report
           </a>
         </div>
       </div>
